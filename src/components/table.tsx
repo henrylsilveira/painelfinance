@@ -2,6 +2,7 @@
 'use client'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
+import { LoaderSpinner } from './loader/loader'
 
 export default function TableFinance() {
   const [tableData, setTableData] = useState([])
@@ -36,7 +37,7 @@ export default function TableFinance() {
   }
   return (
     <div>
-      <div className="relative overflow-x-auto shadow-lg sm:rounded-lg">
+      <div className="relative overflow-x-auto shadow-lg sm:rounded-lg h-[100vh]">
         <div className="flex flex-column sm:flex-row flex-wrap space-y-4 sm:space-y-0 items-center justify-between pb-4">
           <label htmlFor="table-search" className="sr-only">
             Search
@@ -77,47 +78,50 @@ export default function TableFinance() {
             </label>
           </div>
         </div>
-
-        <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-          <thead className="text-xs text-blue-chill-700 uppercase bg-gray-50 dark:bg-blue-chill-800 dark:text-blue-chill-50">
-            <tr>
-              <th scope="col" className="px-6 py-3">
-                Data
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Estabelecimento
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Portador
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Valor
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Parcela
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {tableData.map((data: any, index: number) => (
-              <tr
-                key={index}
-                className="bg-white border-b dark:bg-blue-chill-900 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-blue-chill-800/50"
-              >
-                <th
-                  scope="row"
-                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                >
-                  {data.Data}
+        {loading ? (
+          <LoaderSpinner />
+        ) : (
+          <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <thead className="text-xs text-blue-chill-700 uppercase bg-gray-50 dark:bg-blue-chill-800 dark:text-blue-chill-50">
+              <tr>
+                <th scope="col" className="px-6 py-3">
+                  Data
                 </th>
-                <td className="px-6 py-4">{data.Estabelecimento}</td>
-                <td className="px-6 py-4">{data.Portador.slice(0, 5)}</td>
-                <td className="px-6 py-4">{data.Valor}</td>
-                <td className="px-6 py-4">{data.Parcela}</td>
+                <th scope="col" className="px-6 py-3">
+                  Estabelecimento
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Portador
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Valor
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Parcela
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {tableData.map((data: any, index: number) => (
+                <tr
+                  key={index}
+                  className="bg-white border-b dark:bg-blue-chill-900 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-blue-chill-800/50"
+                >
+                  <th
+                    scope="row"
+                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                  >
+                    {data.Data}
+                  </th>
+                  <td className="px-6 py-4">{data.Estabelecimento}</td>
+                  <td className="px-6 py-4">{data.Portador.slice(0, 5)}</td>
+                  <td className="px-6 py-4">{data.Valor}</td>
+                  <td className="px-6 py-4">{data.Parcela}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </div>
     </div>
   )
