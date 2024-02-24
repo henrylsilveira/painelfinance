@@ -1,17 +1,24 @@
 export function stringParaNumero(valorString: string): number {
-  // Remove o símbolo de real ("R$")
-  const valorSemSimbolo = valorString.replace('R$', '')
+  // Remove o prefixo "R$" e substitui vírgulas por pontos
+  const valorLimpo = valorString
+    .replace('R$', '')
+    .replace('.', '')
+    .replace(',', '.')
+  // Converte para número e aplica o multiplicador
+  const numero = parseFloat(valorLimpo)
+  return numero
+}
 
-  // Remove pontuação
-  const valorSemPontuacao = valorSemSimbolo.replace(/,/g, '')
+export function converterNome(nomeCompleto: string): string {
+  // Divide o nome completo em partes
+  const partes = nomeCompleto.split(' ')
 
-  // Verifica se o valor é negativo
-  const ehNegativo = valorSemPontuacao.charAt(0) === '-'
+  // Pega o primeiro nome
+  const primeiroNome = partes[0]
 
-  // Converte para float e aplica o sinal negativo se necessário
-  const valorNumerico = parseFloat(
-    ehNegativo ? valorSemPontuacao.substring(1) : valorSemPontuacao,
-  )
+  // Cria uma string de asteriscos com o mesmo comprimento do restante do nome
+  const resto = '*'.repeat(nomeCompleto.length - primeiroNome.length)
 
-  return valorNumerico
+  // Retorna o primeiro nome seguido pelo restante substituído por asteriscos
+  return primeiroNome + resto
 }
